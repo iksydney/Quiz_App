@@ -38,11 +38,9 @@ namespace QuizAPI.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Score")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TimeTaken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ParticipantId");

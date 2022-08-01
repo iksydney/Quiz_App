@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   Button,
   TextField,
@@ -17,20 +18,28 @@ const getFreshModel = () => ({
 });
 
 export default function Login() {
-  const { values, setValues, errors, setErrors, handleInputChange } =
-    useForm(getFreshModel);
+  const { values, 
+    setValues, 
+    errors, 
+    setErrors, 
+    handleInputChange 
+  } = useForm(getFreshModel);
 
-  const login = (e) => {
+  const login = e => {
     e.preventDefault();
-    if (validate()) createAPIEndpoint(ENDPOINTS.participant);
-  };
+    if (validate())
+        createAPIEndpoint(ENDPOINTS.participant)
+            .post(values)
+            .then(res => console.log(res))
+            .catch(err => console.log(err))
+  }
 
   const validate = () => {
     let temp = {};
     temp.email = /\S+@\S+\.\S+/.test(values.email) ? "" : "Email is not valid";
-    temp.name = values.name != "" ? "" : "This field is required";
+    temp.name = values.name !== "" ? "" : "This field is required";
     setErrors(temp);
-    return Object.values(temp).every((x) => x == "");
+    return Object.values(temp).every((x) => x === "");
   };
 
   return (
@@ -48,13 +57,14 @@ export default function Login() {
               },
             }}
           >
-            <form noValidate autoComplete="off" onSubmit={login}>
+            <form noValidate autoComplete="off" onSubmit={login} encType="application/x-www-form-urlencoded">
               <TextField
                 label="Email"
                 name="email"
                 value={values.email}
                 onChange={handleInputChange}
                 variant="outlined"
+                id="email-address"
                 {...(errors.email && { error: true, helperText: errors.email })}
               />
 
@@ -64,6 +74,7 @@ export default function Login() {
                 value={values.name}
                 onChange={handleInputChange}
                 variant="outlined"
+                id="name-value"
                 {...(errors.name && { error: true, helperText: errors.name })}
               />
               <Button

@@ -9,7 +9,7 @@ using QuizAPI.Models;
 
 namespace QuizAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/participant")]
     [ApiController]
     public class ParticipantController : ControllerBase
     {
