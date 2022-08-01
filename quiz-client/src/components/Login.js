@@ -31,7 +31,7 @@ export default function Login() {
         createAPIEndpoint(ENDPOINTS.participant)
             .post(values)
             .then(res => console.log(res))
-            .catch(err => console.log(err)) try me
+            .catch(err => console.log(err)) 
   }
 
   const validate = () => {
