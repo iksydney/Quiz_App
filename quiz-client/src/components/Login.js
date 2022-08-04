@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import Center from "./Center";
 import useForm from "../hooks/useForm";
 import { createAPIEndpoint, ENDPOINTS } from "../api";
+import { useNavigate } from "react-router-dom";
 
 const getFreshModel = () => ({
   name: "",
@@ -20,6 +21,8 @@ const getFreshModel = () => ({
 
 export default function Login() {
   const { context, setContext } = useStateContext();
+
+  const navigate = useNavigate();
   const { values, setValues, errors, setErrors, handleInputChange } =
     useForm(getFreshModel);
 
@@ -30,7 +33,7 @@ export default function Login() {
         .post(values)
         .then((res) => {
           setContext({ participantId: res.data.participantId });
-          console.log(context);
+          navigate("/quiz");
         })
         .catch((err) => console.log(err));
   };
@@ -49,7 +52,6 @@ export default function Login() {
       <Card sx={{ width: 450 }}>
         <CardContent sx={{ textAlign: "center" }}>
           <Typography variant="h3" sx={{ my: 3 }}>
-            Quiz
           </Typography>
           <Box
             sx={{
