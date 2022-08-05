@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import { linearProgressClasses } from "@mui/material";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 export const stateContext = createContext();
 
@@ -12,11 +13,8 @@ const getFreshContext = () => {
         selectedOptions: [],
       })
     );
-  //return JSON.parse(JSON.stringify(localStorage.getItem("context")));
   return JSON.parse(localStorage.getItem("context"));
 };
-
-
 
 export default function useStateContext() {
   const { context, setContext } = useContext(stateContext);
