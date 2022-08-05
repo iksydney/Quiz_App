@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios from "axios";
+import useStateContext from "../hooks/useStateContext";
 import {
   Button,
   TextField,
@@ -7,10 +8,11 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import Center from "./Center";
 import useForm from "../hooks/useForm";
 import { createAPIEndpoint, ENDPOINTS } from "../api";
+import { useNavigate } from "react-router-dom";
 
 const getFreshModel = () => ({
   name: "",
@@ -18,21 +20,23 @@ const getFreshModel = () => ({
 });
 
 export default function Login() {
-  const { values, 
-    setValues, 
-    errors, 
-    setErrors, 
-    handleInputChange 
-  } = useForm(getFreshModel);
+  const { context, setContext } = useStateContext();
 
-  const login = e => {
+  const navigate = useNavigate();
+  const { values, setValues, errors, setErrors, handleInputChange } =
+    useForm(getFreshModel);
+
+  const login = (e) => {
     e.preventDefault();
     if (validate())
-        createAPIEndpoint(ENDPOINTS.participant)
-            .post(values)
-            .then(res => console.log(res))
-            .catch(err => console.log(err)) 
-  }
+      createAPIEndpoint(ENDPOINTS.participant)
+        .post(values)
+        .then((res) => {
+          setContext({ participantId: res.data.participantId });
+          navigate("/quiz");
+        })
+        .catch((err) => console.log(err));
+  };
 
   const validate = () => {
     let temp = {};
@@ -44,10 +48,10 @@ export default function Login() {
 
   return (
     <Center>
+      {context.participantId}
       <Card sx={{ width: 450 }}>
         <CardContent sx={{ textAlign: "center" }}>
           <Typography variant="h3" sx={{ my: 3 }}>
-            Quiz
           </Typography>
           <Box
             sx={{
@@ -57,7 +61,12 @@ export default function Login() {
               },
             }}
           >
-            <form noValidate autoComplete="off" onSubmit={login} encType="application/x-www-form-urlencoded">
+            <form
+              noValidate
+              autoComplete="off"
+              onSubmit={login}
+              encType="application/x-www-form-urlencoded"
+            >
               <TextField
                 label="Email"
                 name="email"
@@ -65,6 +74,7 @@ export default function Login() {
                 onChange={handleInputChange}
                 variant="outlined"
                 id="email-address"
+                autoComplete=""
                 {...(errors.email && { error: true, helperText: errors.email })}
               />
 

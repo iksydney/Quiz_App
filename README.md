@@ -1,0 +1,1 @@
+A mini project titled Quiz App, that gives students random questions from the database and collates the total score of the student at the end of the quiz. This was achieved with the use of React framework for the front end, axios to connect the backend web API built using C#(ASP.NET).

@@ -11,7 +11,13 @@ namespace QuizAPI.Models
         public string Email { get; set; }
         [Column(TypeName = "nvarchar(50)")]
         public string Name { get; set; }
-        public string? Score { get; set; }
-        public string? TimeTaken { get; set; }
+        public int? Score { get; set; }
+        public int? TimeTaken { get; set; }
+    }
+    public class ParticipantResult
+    {
+        public int ParticipantId { get; set; }
+        public int Score { get; set; }
+        public int TimeTaken { get; set; }
     }
 }
